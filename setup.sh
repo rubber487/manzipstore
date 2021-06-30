@@ -1,3 +1,36 @@
+
+Skip to content
+Pull requests
+Issues
+Marketplace
+Explore
+@rubber487
+rubber487 /
+manzipstore
+
+1
+1
+
+    0
+
+Code
+Issues
+Pull requests
+Actions
+Projects
+Wiki
+Security
+Insights
+
+    Settings
+
+manzipstore/setup.sh
+@rubber487
+rubber487 Add files via upload
+Latest commit 18ffd94 17 minutes ago
+History
+1 contributor
+454 lines (413 sloc) 17.1 KB
 #!/bin/bash
 if [ "${EUID}" -ne 0 ]; then
 		echo "You need to run this script as root"
@@ -36,7 +69,7 @@ commonname=Allahuakbar
 email=admin@geolstore.net
 
 # simple password minimal
-wget -O /etc/pam.d/common-password "https://raw.githubusercontent.com/Nurjanah1981/tes/main/password"
+wget -O /etc/pam.d/common-password "https://raw.githubusercontent.com/rubber487/manzipstore/main/password"
 chmod +x /etc/pam.d/common-password
 
 # go to root
@@ -103,14 +136,14 @@ apt -y install nginx
 cd
 rm /etc/nginx/sites-enabled/default
 rm /etc/nginx/sites-available/default
-wget -O /etc/nginx/nginx.conf "https://raw.githubusercontent.com/Nurjanah1981/tes/main/nginx.conf"
+wget -O /etc/nginx/nginx.conf "https://raw.githubusercontent.com/rubber487/manzipstore/main/nginx.conf"
 mkdir -p /home/vps/public_html
-wget -O /etc/nginx/conf.d/vps.conf "https://raw.githubusercontent.com/Nurjanah1981/tes/main/vps.conf"
+wget -O /etc/nginx/conf.d/vps.conf "https://raw.githubusercontent.com/rubber487/manzipstore/main/vps.conf"
 /etc/init.d/nginx restart
 
 # install badvpn
 cd
-wget -O /usr/bin/badvpn-udpgw "https://raw.githubusercontent.com/Nurjanah1981/tes/main/badvpn-udpgw64"
+wget -O /usr/bin/badvpn-udpgw "https://raw.githubusercontent.com/rubber487/manzipstore/main/badvpn-udpgw64"
 chmod +x /usr/bin/badvpn-udpgw
 sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7100 --max-clients 500' /etc/rc.local
 sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7200 --max-clients 500' /etc/rc.local
@@ -140,7 +173,7 @@ echo "/usr/sbin/nologin" >> /etc/shells
 # install squid
 cd
 apt -y install squid3
-wget -O /etc/squid/squid.conf "https://raw.githubusercontent.com/Nurjanah1981/tes/main/squid3.conf"
+wget -O /etc/squid/squid.conf "https://raw.githubusercontent.com/rubber487/manzipstore/main/squid3.conf"
 sed -i $MYIP2 /etc/squid/squid.conf
 
 # setting vnstat
@@ -168,19 +201,15 @@ client = no
 socket = a:SO_REUSEADDR=1
 socket = l:TCP_NODELAY=1
 socket = r:TCP_NODELAY=1
-
 [dropbear]
 accept = 443
 connect = 127.0.0.1:109
-
 [dropbear]
 accept = 777
 connect = 127.0.0.1:22
-
 [openvpn]
 accept = 442
 connect = 127.0.0.1:1194
-
 END
 
 # make a certificate
@@ -194,7 +223,7 @@ sed -i 's/ENABLED=0/ENABLED=1/g' /etc/default/stunnel4
 /etc/init.d/stunnel4 restart
 
 #OpenVPN
-wget https://raw.githubusercontent.com/Nurjanah1981/tes/main/vpn.sh && chmod +x vpn.sh && ./vpn.sh
+wget https://raw.githubusercontent.com/rubber487/manzipstore/main/vpn.sh && chmod +x vpn.sh && ./vpn.sh
 
 # install fail2ban
 apt -y install fail2ban
@@ -249,35 +278,35 @@ netfilter-persistent reload
 
 # download script
 cd /usr/bin
-wget -O add-host "https://raw.githubusercontent.com/Nurjanah1981/tes/main/add-host.sh"
-wget -O about "https://raw.githubusercontent.com/Nurjanah1981/tes/main/about.sh"
-wget -O menu "https://raw.githubusercontent.com/Nurjanah1981/tes/main/menu.sh"
-wget -O usernew "https://raw.githubusercontent.com/Nurjanah1981/tes/main/usernew.sh"
-wget -O trial "https://raw.githubusercontent.com/Nurjanah1981/tes/main/trial.sh"
-wget -O hapus "https://raw.githubusercontent.com/Nurjanah1981/tes/main/hapus.sh"
-wget -O member "https://raw.githubusercontent.com/Nurjanah1981/tes/main/member.sh"
-wget -O delete "https://raw.githubusercontent.com/Nurjanah1981/tes/main/delete.sh"
-wget -O cek "https://raw.githubusercontent.com/Nurjanah1981/tes/main/cek.sh"
-wget -O restart "https://raw.githubusercontent.com/Nurjanah1981/tes/main/restart.sh"
-wget -O speedtest "https://raw.githubusercontent.com/Nurjanah1981/tes/main/speedtest_cli.py"
-wget -O info "https://raw.githubusercontent.com/Nurjanah1981/tes/main/info.sh"
-wget -O ram "https://raw.githubusercontent.com/Nurjanah1981/tes/main/ram.sh"
-wget -O renew "https://raw.githubusercontent.com/Nurjanah1981/tes/main/renew.sh"
-wget -O autokill "https://raw.githubusercontent.com/Nurjanah1981/tes/main/autokill.sh"
-wget -O ceklim "https://raw.githubusercontent.com/Nurjanah1981/tes/main/ceklim.sh"
-wget -O tendang "https://raw.githubusercontent.com/Nurjanah1981/tes/main/tendang.sh"
+wget -O add-host "https://raw.githubusercontent.com/rubber487/manzipstore/main/add-host.sh"
+wget -O about "https://raw.githubusercontent.com/rubber487/manzipstore/main/about.sh"
+wget -O menu "https://raw.githubusercontent.com/rubber487/manzipstore/main/menu.sh"
+wget -O usernew "https://raw.githubusercontent.com/rubber487/manzipstore/main/usernew.sh"
+wget -O trial "https://raw.githubusercontent.com/rubber487/manzipstore/main/trial.sh"
+wget -O hapus "https://raw.githubusercontent.com/rubber487/manzipstore/main/hapus.sh"
+wget -O member "https://raw.githubusercontent.com/rubber487/manzipstore/main/member.sh"
+wget -O delete "https://raw.githubusercontent.com/rubber487/manzipstore/main/delete.sh"
+wget -O cek "https://raw.githubusercontent.com/rubber487/manzipstore/main/cek.sh"
+wget -O restart "https://raw.githubusercontent.com/rubber487/manzipstore/main/restart.sh"
+wget -O speedtest "https://raw.githubusercontent.com/rubber487/manzipstore/main/speedtest_cli.py"
+wget -O info "https://raw.githubusercontent.com/rubber487/manzipstore/main/info.sh"
+wget -O ram "https://raw.githubusercontent.com/rubber487/manzipstore/main/ram.sh"
+wget -O renew "https://raw.githubusercontent.com/rubber487/manzipstore/main/renew.sh"
+wget -O autokill "https://raw.githubusercontent.com/rubber487/manzipstore/main/autokill.sh"
+wget -O ceklim "https://raw.githubusercontent.com/rubber487/manzipstore/main/ceklim.sh"
+wget -O tendang "https://raw.githubusercontent.com/rubber487/manzipstore/main/tendang.sh"
 wget -O clear-log "https://raw.githubusercontent.com/Nurjanah1981/main/clear-log.sh"
-wget -O change-port "https://raw.githubusercontent.com/Nurjanah1981/tes/main/change.sh"
-wget -O port-ovpn "https://raw.githubusercontent.com/Nurjanah1981/tes/main/port-ovpn.sh"
-wget -O port-ssl "https://raw.githubusercontent.com/Nurjanah1981/tes/main/port-ssl.sh"
-wget -O port-wg "https://raw.githubusercontent.com/Nurjanah1981/tes/main/port-wg.sh"
-wget -O port-tr "https://raw.githubusercontent.com/Nurjanah1981/tes/main/port-tr.sh"
-wget -O port-sstp "https://raw.githubusercontent.com/Nurjanah1981/tes/main/port-sstp.sh"
-wget -O port-squid "https://raw.githubusercontent.com/Nurjanah1981/tes/main/port-squid.sh"
-wget -O port-ws "https://raw.githubusercontent.com/Nurjanah1981/tes/main/port-ws.sh"
-wget -O port-vless "https://raw.githubusercontent.com/Nurjanah1981/tes/main/port-vless.sh"
-wget -O wbmn "https://raw.githubusercontent.com/Nurjanah1981/tes/main/webmin.sh"
-wget -O xp "https://raw.githubusercontent.com/Nurjanah1981/tes/main/xp.sh"
+wget -O change-port "https://raw.githubusercontent.com/rubber487/manzipstore/main/change.sh"
+wget -O port-ovpn "https://raw.githubusercontent.com/rubber487/manzipstore/main/port-ovpn.sh"
+wget -O port-ssl "https://raw.githubusercontent.com/rubber487/manzipstore/main/port-ssl.sh"
+wget -O port-wg "https://raw.githubusercontent.com/rubber487/manzipstore/main/port-wg.sh"
+wget -O port-tr "https://raw.githubusercontent.com/rubber487/manzipstore/main/port-tr.sh"
+wget -O port-sstp "https://raw.githubusercontent.com/rubber487/manzipstore/main/port-sstp.sh"
+wget -O port-squid "https://raw.githubusercontent.com/rubber487/manzipstore/main/port-squid.sh"
+wget -O port-ws "https://raw.githubusercontent.com/rubber487/manzipstore/main/port-ws.sh"
+wget -O port-vless "https://raw.githubusercontent.com/rubber487/manzipstore/main/port-vless.sh"
+wget -O wbmn "https://raw.githubusercontent.com/rubber487/manzipstore/main/webmin.sh"
+wget -O xp "https://raw.githubusercontent.com/rubber487/manzipstore/main/xp.sh"
 wget -O kernel-updt "https://raw.githubusercontent.com/Nurjanah1981/main/kernel-update.sh"
 chmod +x add-host
 chmod +x menu
@@ -355,19 +384,19 @@ clear
 
 mkdir /var/lib/premium-script;
 echo "IP=" >> /var/lib/premium-script/ipvps.conf
-wget https://raw.githubusercontent.com/Nurjanah1981/tes/main/cf.sh && chmod +x cf.sh && ./cf.sh
+wget https://raw.githubusercontent.com/rubber487/manzipstore/main/cf.sh && chmod +x cf.sh && ./cf.sh
 #install ssh ovpn
-wget https://raw.githubusercontent.com/Nurjanah1981/tes/main/sstp.sh && chmod +x sstp.sh && screen -S sstp ./sstp.sh
+wget https://raw.githubusercontent.com/rubber487/manzipstore/main/sstp.sh && chmod +x sstp.sh && screen -S sstp ./sstp.sh
 #install ssr
-wget https://raw.githubusercontent.com/Nurjanah1981/tes/main/ssr.sh && chmod +x ssr.sh && screen -S ssr ./ssr.sh
-wget https://raw.githubusercontent.com/Nurjanah1981/tes/main/sodosok.sh && chmod +x sodosok.sh && screen -S ss ./sodosok.sh
+wget https://raw.githubusercontent.com/rubber487/manzipstore/main/ssr.sh && chmod +x ssr.sh && screen -S ssr ./ssr.sh
+wget https://raw.githubusercontent.com/rubber487/manzipstore/main/sodosok.sh && chmod +x sodosok.sh && screen -S ss ./sodosok.sh
 #installwg
-wget https://raw.githubusercontent.com/Nurjanah1981/tes/main/wg.sh && chmod +x wg.sh && screen -S wg ./wg.sh
+wget https://raw.githubusercontent.com/rubber487/manzipstore/main/wg.sh && chmod +x wg.sh && screen -S wg ./wg.sh
 #install v2ray
-wget https://raw.githubusercontent.com/Nurjanah1981/tes/main/ins-vt.sh && chmod +x ins-vt.sh && screen -S v2ray ./ins-vt.sh
+wget https://raw.githubusercontent.com/rubber487/manzipstore/main/ins-vt.sh && chmod +x ins-vt.sh && screen -S v2ray ./ins-vt.sh
 #install L2TP
-wget https://raw.githubusercontent.com/Nurjanah1981/tes/main/ipsec.sh && chmod +x ipsec.sh && screen -S ipsec ./ipsec.sh
-wget https://raw.githubusercontent.com/Nurjanah1981/tes/main/set-br.sh && chmod +x set-br.sh && ./set-br.sh
+wget https://raw.githubusercontent.com/rubber487/manzipstore/main/ipsec.sh && chmod +x ipsec.sh && screen -S ipsec ./ipsec.sh
+wget https://raw.githubusercontent.com/rubber487/manzipstore/main/set-br.sh && chmod +x set-br.sh && ./set-br.sh
 
 rm -f /root/ssh-vpn.sh
 rm -f /root/sstp.sh
@@ -381,18 +410,16 @@ cat <<EOF> /etc/systemd/system/autosett.service
 [Unit]
 Description=autosetting
 Documentation=https://vpnstores.net
-
 [Service]
 Type=oneshot
 ExecStart=/bin/bash /etc/set.sh
 RemainAfterExit=yes
-
 [Install]
 WantedBy=multi-user.target
 EOF
 systemctl daemon-reload
 systemctl enable autosett
-wget -O /etc/set.sh "https://raw.githubusercontent.com/Nurjanah1981/tes/main/set.sh"
+wget -O /etc/set.sh "https://raw.githubusercontent.com/rubber487/manzipstore/main/set.sh"
 chmod +x /etc/set.sh
 history -c
 echo "1.2" > /home/ver
@@ -445,10 +472,25 @@ echo "   - Telegram                : T.me/sampiiiiu"  | tee -a log-install.txt
 echo "   - Instagram               : ~"  | tee -a log-install.txt
 echo "   - Whatsapp                : 085333790161"  | tee -a log-install.txt
 echo "   - Facebook                : ~" | tee -a log-install.txt
-echo "------------------Script Created By Geo-----------------" | tee -a log-install.txt
+echo "------------------Script Created By ManZip-----------------" | tee -a log-install.txt
 echo ""
 echo " reboot 15 Sec"
 sleep 15
 rm -f setup.sh
 reboot
 
+    © 2021 GitHub, Inc.
+    Terms
+    Privacy
+    Security
+    Status
+    Docs
+
+    Contact GitHub
+    Pricing
+    API
+    Training
+    Blog
+    About
+
+Loading complete
